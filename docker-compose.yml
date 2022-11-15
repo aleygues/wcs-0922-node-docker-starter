@@ -2,14 +2,13 @@ version: '3'
 
 services:
   api:
-    # image: wildbookapi
+    # image: api
     build: ./
     ports:
       - 5000:5000
     volumes:
       - ./src:/app/src
   db:
-    container_name: wilddb
     image: postgres
     environment:
       POSTGRES_PASSWORD: supersecret
