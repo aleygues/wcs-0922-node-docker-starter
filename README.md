@@ -20,3 +20,10 @@ npm i
 ```
 
 Please note that everytime you install a new NPM package, you should rerun you docker compose command.
+
+To run test, you have 2 choices:
+
+- run in with docker (will work with all OS and a CI): `yarn test:docker`, check the yarn script and the `docker-compose.test.yml` for more information,
+- run tests locally, connected to a Docker DB. First launch a PostGres DB with `docker run -e POSTGRES_PASSWORD=supersecret -p 5432:5432 postgres`, and let the db running, in another terminal, finally run the tests locally by using `yarn test ./tests --watch`
+
+The `./tests` folder contains some examples of integration tests. These tests will be run against a live DB that will be truncated (clear) before all tests.
