@@ -3,13 +3,18 @@ import { ApolloServer } from "apollo-server";
 import datasource from "./utils";
 import { buildSchema } from "type-graphql";
 import { UsersResolver } from "./resolvers/Users";
+import { authChecker } from "./auth";
+import { CommentsResolver } from "./resolvers/Comments";
+import { PostsResolver } from "./resolvers/Posts";
+import { ImagesResolver } from "./resolvers/Images";
 
 const PORT = 5000;
 
 async function bootstrap(): Promise<void> {
   // ... Building schema here
   const schema = await buildSchema({
-    resolvers: [UsersResolver],
+    resolvers: [UsersResolver, CommentsResolver, PostsResolver, ImagesResolver],
+    authChecker,
   });
 
   // Create the GraphQL server
