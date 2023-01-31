@@ -4,6 +4,8 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
+  JoinColumn,
 } from "typeorm";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
 import { Length } from "class-validator";
@@ -27,7 +29,8 @@ export class Post {
   @Field(() => [Comment])
   comments: Comment[];
 
-  @ManyToOne(() => Image, (image) => image.post)
+  @OneToOne(() => Image, (image) => image.post)
+  @JoinColumn()
   @Field(() => Image)
   image: Image;
 
@@ -46,6 +49,7 @@ export class PostInput {
   @Length(5, 500)
   content: string;
 
+  // { id: number, url: string, ... }
   @Field(() => UniqueRelation)
   image: UniqueRelation;
 

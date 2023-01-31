@@ -13,7 +13,7 @@ export class PostsResolver {
   ): Promise<Post> {
     data.createdAt = new Date();
     data.createdBy = context.user?.id as any;
-
+    // data.image = { id: number };
     return await datasource.getRepository(Post).save(data);
   }
 

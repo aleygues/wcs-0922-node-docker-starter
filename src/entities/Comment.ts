@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
 import { Length } from "class-validator";
 import { User } from "./User";
@@ -21,6 +28,11 @@ export class Comment {
   @Field(() => Post)
   post: Post;
 
+  @ManyToMany(() => User, (user) => user.likes)
+  @JoinTable()
+  @Field(() => [User])
+  likes: User[];
+
   @ManyToOne(() => User)
   @Field(() => User, { nullable: true })
   createdBy: User;
@@ -36,7 +48,7 @@ export class Comment {
 }
 
 @InputType()
-export class CommentInput {
+export class CreateCommentInput {
   @Field()
   @Length(5, 500)
   comment: string;
@@ -44,7 +56,17 @@ export class CommentInput {
   @Field(() => UniqueRelation)
   post: UniqueRelation;
 
+  @Field(() => [UniqueRelation])
+  likes: UniqueRelation[];
+
   // these fields are not available for GraphQL
   createdAt: Date;
   createdBy: User;
+}
+
+@InputType()
+export class UpdateCommentInput {
+  @Field({ nullable: true })
+  @Length(5, 500)
+  comment: string;
 }

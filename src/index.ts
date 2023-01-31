@@ -21,15 +21,27 @@ async function bootstrap(): Promise<void> {
   const server = new ApolloServer({
     schema,
     cors: true,
-  });
+    context: ({ req }) => {
+      // Get the user token from the headers.
+      const authorization: string | undefined = req?.headers?.authorization;
 
-  // Start the server
-  const { url } = await server.listen(PORT);
-  console.log(`Server is running, GraphQL Playground available at ${url}`);
+      if (authorization) {
+        // Bearer ...jwt
+        const token = authorization.split(" ").pop();
+        return { token };
+      }
+      // Add the user to the context
+      return { token: null };
+    },
+  });
 
   try {
     await datasource.initialize();
-    console.log("Server started!");
+    console.log("DB started!");
+
+    // Start the server
+    const { url } = await server.listen(PORT);
+    console.log(`Server is running, GraphQL Playground available at ${url}`);
   } catch (err) {
     console.log("An error occured");
     console.error(err);

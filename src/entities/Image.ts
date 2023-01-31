@@ -3,7 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToMany,
+  OneToOne,
 } from "typeorm";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
 import { IsUrl } from "class-validator";
@@ -21,7 +21,7 @@ export class Image {
   @Field()
   url: string;
 
-  @OneToMany(() => Post, (post) => post.image)
+  @OneToOne(() => Post, (post) => post.image)
   @Field(() => Post)
   post: Post;
 

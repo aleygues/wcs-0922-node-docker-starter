@@ -1,6 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
 import { IsEmail, Length } from "class-validator";
+import { Comment } from "./Comment";
 
 @Entity()
 @ObjectType()
@@ -16,6 +23,10 @@ export class User {
   @Column()
   @Field()
   password: string;
+
+  @ManyToMany(() => Comment, (comment) => comment.likes)
+  @Field(() => [Comment])
+  likes: Comment[];
 }
 
 @InputType()

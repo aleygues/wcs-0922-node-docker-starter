@@ -5,6 +5,7 @@
     "lib": ["es2018", "esnext.asynciterable"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "strictNullChecks": true
+    "strictNullChecks": false,
+    "esModuleInterop": true
   }
 }

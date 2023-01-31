@@ -1,7 +1,9 @@
-import { Resolver, Mutation, Arg, Query } from "type-graphql";
+import { Resolver, Mutation, Arg, Query, Ctx, Authorized } from "type-graphql";
 import { User, UserInput } from "../entities/User";
 import datasource from "../utils";
-import { hash } from "argon2";
+import { hash, verify } from "argon2";
+import { sign } from "jsonwebtoken";
+import { IContext } from "../auth";
 
 @Resolver()
 export class UsersResolver {
@@ -13,8 +15,6 @@ export class UsersResolver {
     return await datasource.getRepository(User).save(data);
   }
 
-<<<<<<< Updated upstream
-=======
   @Mutation(() => String, { nullable: true })
   async signin(
     @Arg("email") email: string,
@@ -31,7 +31,7 @@ export class UsersResolver {
 
       if (await verify(user.password, password)) {
         const token = sign({ userId: user.id }, "supersecret!", {
-          expiresIn: 3600,
+          expiresIn: 3600 * 500,
         });
         return token;
       } else {
@@ -50,7 +50,6 @@ export class UsersResolver {
 
   // only connected user may read that
   @Authorized()
->>>>>>> Stashed changes
   @Query(() => [User])
   async users(): Promise<User[]> {
     return await datasource.getRepository(User).find({});

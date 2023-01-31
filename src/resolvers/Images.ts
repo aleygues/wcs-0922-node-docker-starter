@@ -7,7 +7,7 @@ import datasource from "../utils";
 export class ImagesResolver {
   @Authorized()
   @Mutation(() => Image)
-  async Image(
+  async createImage(
     @Ctx() context: IContext,
     @Arg("data", () => ImageInput) data: ImageInput
   ): Promise<Image> {

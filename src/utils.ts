@@ -6,7 +6,7 @@ import { Image } from "./entities/Image";
 
 const datasource = new DataSource({
   type: "postgres",
-  host: "db",
+  host: process.env.DB_HOST,
   port: 5432,
   username: "postgres",
   password: "supersecret",
