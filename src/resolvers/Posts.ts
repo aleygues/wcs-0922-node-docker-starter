@@ -22,6 +22,6 @@ export class PostsResolver {
   async posts(): Promise<Post[]> {
     return await datasource
       .getRepository(Post)
-      .find({ relations: ["createdBy", "comments"] });
+      .find({ relations: ["createdBy", "comments", "comments.createdBy"] });
   }
 }

@@ -56,9 +56,6 @@ export class CreateCommentInput {
   @Field(() => UniqueRelation)
   post: UniqueRelation;
 
-  @Field(() => [UniqueRelation])
-  likes: UniqueRelation[];
-
   // these fields are not available for GraphQL
   createdAt: Date;
   createdBy: User;

@@ -7,13 +7,21 @@ import { authChecker } from "./auth";
 import { CommentsResolver } from "./resolvers/Comments";
 import { PostsResolver } from "./resolvers/Posts";
 import { ImagesResolver } from "./resolvers/Images";
+import { User } from "./entities/User";
+import { Dev } from "./resolvers/Dev";
 
 const PORT = 5000;
 
 async function bootstrap(): Promise<void> {
   // ... Building schema here
   const schema = await buildSchema({
-    resolvers: [UsersResolver, CommentsResolver, PostsResolver, ImagesResolver],
+    resolvers: [
+      UsersResolver,
+      CommentsResolver,
+      PostsResolver,
+      ImagesResolver,
+      ...(process.env.DEV ? [Dev] : []),
+    ],
     authChecker,
   });
 

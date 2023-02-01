@@ -50,7 +50,7 @@ export class PostInput {
   content: string;
 
   // { id: number, url: string, ... }
-  @Field(() => UniqueRelation)
+  @Field(() => UniqueRelation, { nullable: true })
   image: UniqueRelation;
 
   // these fields are not available for GraphQL

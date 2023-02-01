@@ -10,6 +10,7 @@ services:
       - ./src:/app/src
     environment:
       - DB_HOST=db
+      - DEV=true
   db:
     image: postgres
     environment:
