@@ -25,16 +25,16 @@ export class Post {
   @Field()
   content: string;
 
-  @OneToMany(() => Comment, (comment) => comment.post)
+  @OneToMany(() => Comment, (comment) => comment.post, { lazy: true })
   @Field(() => [Comment])
-  comments: Comment[];
+  comments: Promise<Comment[]>;
 
   @OneToOne(() => Image, (image) => image.post)
   @JoinColumn()
   @Field(() => Image)
   image: Image;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { lazy: true })
   @Field(() => User, { nullable: true })
   createdBy: User;
 
