@@ -1,0 +1,12 @@
+name: testing-back
+
+on: pull_request
+
+jobs:
+  test-back:
+    runs-on: ubuntu-latest # contains Docker + Docker compose
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Run test
+        run: yarn test:ci

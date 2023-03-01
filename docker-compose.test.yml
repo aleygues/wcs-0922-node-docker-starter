@@ -12,7 +12,7 @@ services:
     environment:
       - DB_HOST=db
     # run tests instead of launching api
-    command: yarn test ./tests --watch
+    command: yarn test ./tests ${JEST_OPTIONS}
   db:
     image: postgres
     environment:

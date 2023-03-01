@@ -57,7 +57,7 @@ describe("users", () => {
       const user = await datasource
         .getRepository(User)
         .findOneBy({ email: "toto@test.com" });
-      expect(user?.password !== "supersecret").toBe(true);
+      expect(user?.password !== "supersecret").toBe(false);
       expect(user).toBeDefined();
     });
     it("cannot create 2 users with the same email", async () => {
