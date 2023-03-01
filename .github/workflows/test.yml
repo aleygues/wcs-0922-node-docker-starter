@@ -8,5 +8,9 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      # with Docker
+      # - name: Run test
+      #   run: yarn test:ci
+      # Without Docker
       - name: Run test
-        run: yarn test:ci
+        run: yarn && yarn test:sqlite

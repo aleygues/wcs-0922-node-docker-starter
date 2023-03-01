@@ -17,15 +17,20 @@ beforeAll(async () => {
   await datasource.initialize();
 
   // purge DB
-  try {
-    const entities = datasource.entityMetadatas;
-    const tableNames = entities
-      .map((entity) => `"${entity.tableName}"`)
-      .join(", ");
-    await datasource.query(`TRUNCATE ${tableNames} CASCADE;`);
-    console.log("[TEST DATABASE]: Clean");
-  } catch (error) {
-    throw new Error(`ERROR: Cleaning test database: ${JSON.stringify(error)}`);
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+  if (!process.env.SQLITE) {
+    try {
+      const entities = datasource.entityMetadatas;
+      const tableNames = entities
+        .map((entity) => `"${entity.tableName}"`)
+        .join(", ");
+      await datasource.query(`TRUNCATE ${tableNames} CASCADE;`);
+      console.log("[TEST DATABASE]: Clean");
+    } catch (error) {
+      throw new Error(
+        `ERROR: Cleaning test database: ${JSON.stringify(error)}`
+      );
+    }
   }
 
   // compute GraphQL schema
